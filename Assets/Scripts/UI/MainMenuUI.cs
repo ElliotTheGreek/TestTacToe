@@ -21,7 +21,7 @@ public class MainMenuUI : MonoBehaviour
     {
         if (gameManager == null) gameManager = GameManager.Instance;
         gameManager.SetSinglePlayer(singlePlayer);
-        SceneTransitioner.Instance.TransitionToScene(1);
+        SceneTransitioner.Instance?.TransitionToScene(1);
     }
 
     public void ToggleSound()
