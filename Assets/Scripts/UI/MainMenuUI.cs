@@ -21,11 +21,16 @@ public class MainMenuUI : MonoBehaviour
     {
         if (gameManager == null) gameManager = GameManager.Instance;
         gameManager.SetSinglePlayer(singlePlayer);
+        SceneTransitioner.Instance.TransitionToScene(1);
     }
 
     public void ToggleSound()
     {
-        SoundManager.Instance.ToggleSound();
-        soundsDisabledSprite.enabled = !SoundManager.Instance.soundOn;
+        if (soundManager == null) soundManager = SoundManager.Instance;
+
+        if (soundManager == null) return;
+
+        soundManager.ToggleSound();
+        soundsDisabledSprite.enabled = !soundManager.soundOn;
     }
 }
