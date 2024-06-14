@@ -33,4 +33,9 @@ public class MainMenuUI : MonoBehaviour
         soundManager.ToggleSound();
         soundsDisabledSprite.enabled = !soundManager.soundOn;
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
