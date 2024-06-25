@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class BoardManager : MonoBehaviour
 {
     public static BoardManager Instance;
@@ -13,6 +12,7 @@ public class BoardManager : MonoBehaviour
     GameManager gameManager;
 
     bool activeGame = true;
+    bool canClick = true;
 
     void Awake()
     {
@@ -33,7 +33,7 @@ public class BoardManager : MonoBehaviour
 
     void Update()
     {
-        if (!activeGame) return;
+        if (!activeGame || !canClick) return; 
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -45,6 +45,7 @@ public class BoardManager : MonoBehaviour
                 {
                     Vector3 newPosition = CalculatePosition(hit.point, out int x, out int z);
                     gameManager.PlacePiece(newPosition, x, z);
+                    StartCoroutine(ClickCooldown());
                 }
             }
         }
@@ -62,6 +63,13 @@ public class BoardManager : MonoBehaviour
 
         // Return the new position with Y set to 0
         return new Vector3((x - 1) * 2, 0, (z - 1) * 2);
+    }
+
+    IEnumerator ClickCooldown()
+    {
+        canClick = false; 
+        yield return new WaitForSeconds(0.5f); 
+        canClick = true;
     }
 
     public void DeclareWinner(bool playerOne)
